@@ -177,7 +177,7 @@ function App() {
   const [filter, setFilter] = useState(columnFilters)
   const [commonSearch, setCommonSearch] = useState('')
   const [columnDisplay, setColumnDisplay] = useState(columnsDisplay)
-  const [groupBy, setGroupBy] = useState(undefined)
+  const [groupBy, setGroupBy] = useState(false)
   const [collapseOpen, setCollapseOpen] = useState({})
   const updateRow = useCallback((rowId, column, newVal, currentData) => {
     const newData = [...currentData]
@@ -275,7 +275,7 @@ function App() {
       return toRet
     })
     const grouped = {}
-    for(let row of data) {
+    for(let row of filtered) {
       if(grouped[row[groupBy]]) {
         grouped[row[groupBy]].push(row)
       } else {
@@ -319,6 +319,9 @@ function App() {
               value={groupBy}
               onChange={e => setGroupBy(e.target.value)}
             >
+              <MenuItem key={false} value={false}>
+                None
+              </MenuItem>
               {columns.filter(c => c.type !== 'list').map(cd => (
                 <MenuItem key={cd.id} value={cd.id}>
                   {cd.title}
